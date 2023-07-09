@@ -36,3 +36,4 @@ CMakeLists.txt
 cmake-build-*/
 .vs/
 .idea/
+test.c

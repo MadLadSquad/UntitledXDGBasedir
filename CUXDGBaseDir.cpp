@@ -82,3 +82,8 @@ char** UXDG_splitEnv(const char* str, size_t* size)
 {
     return copyArray(UXDG::splitEnv(str), size);
 }
+
+void UXDG_setStickyBit(const char* location)
+{
+    UXDG::setStickyBit(location);
+}

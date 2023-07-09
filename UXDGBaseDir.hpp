@@ -87,4 +87,12 @@ namespace UXDG
 
     // Splits a list in environment variable format "a:b:c:d:e:f" into an array of strings
     UVK_PUBLIC_API std::vector<std::string> splitEnv(const std::string& str) noexcept;
+
+    // Sets the sticky bit permission of a file or directory. This is useful for files in XDG_RUNTIME_DIR that
+    // you don't want to be cleaned up automatically.
+    //
+    // XDG Basedir spec: ...Files in this directory MAY be subjected to periodic clean-up. To ensure that your files
+    // are not removed, they should have their access time timestamp modified at least once every 6 hours of
+    // monotonic time or the 'sticky' bit should be set on the file.
+    UVK_PUBLIC_API void setStickyBit(const std::string& location) noexcept;
 }

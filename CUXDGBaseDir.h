@@ -8,15 +8,21 @@ extern "C"
 {
 #endif
 
+// The return value of this function should be deallocated using "UXDG_FreeResult_Str"
+//
 // XDG Basedir spec: $XDG_DATA_HOME defines the base directory relative to which user-specific data files should be
 // stored. If $XDG_DATA_HOME is either not set or empty, a default equal to $HOME/.local/share should be used.
 UVK_PUBLIC_API char* UXDG_XDG_DATA_HOME();
 
+// The return value of this function should be deallocated using "UXDG_FreeResult_Str"
+//
 // XDG Basedir spec: $XDG_CONFIG_HOME defines the base directory relative to which user-specific configuration
 // files should be stored. If $XDG_CONFIG_HOME is either not set or empty, a default equal to $HOME/.config should
 // be used.
 UVK_PUBLIC_API char* UXDG_XDG_CONFIG_HOME();
 
+// The return value of this function should be deallocated using "UXDG_FreeResult_Str"
+//
 // XDG Basedir spec: The $XDG_STATE_HOME contains state data that should persist between (application) restarts,
 // but that is not important or portable enough to the user that it should be stored in $XDG_DATA_HOME.
 // It may contain:
@@ -24,11 +30,15 @@ UVK_PUBLIC_API char* UXDG_XDG_CONFIG_HOME();
 // - current state of the application that can be reused on a restart (view, layout, open files, undo history, …)
 UVK_PUBLIC_API char* UXDG_XDG_STATE_HOME();
 
+// The return value of this function should be deallocated using "UXDG_FreeResult_Str"
+//
 // XDG Basedir spec: $XDG_CACHE_HOME defines the base directory relative to which user-specific non-essential
 // data files should be stored. If $XDG_CACHE_HOME is either not set or empty, a default equal to
 // $HOME/.cache should be used.
 UVK_PUBLIC_API char* UXDG_XDG_CACHE_HOME();
 
+// The return value of this function should be deallocated using "UXDG_FreeResult_Str"
+//
 // XDG Basedir spec: $XDG_RUNTIME_DIR defines the base directory relative to which user-specific non-essential
 // runtime files and other file objects (such as sockets, named pipes, ...) should be stored.
 // The directory MUST be owned by the user, and he MUST be the only one having read and write access to it.
@@ -54,9 +64,13 @@ UVK_PUBLIC_API char* UXDG_XDG_CACHE_HOME();
 // memory and cannot necessarily be swapped out to disk.
 UVK_PUBLIC_API char* UXDG_XDG_RUNTIME_DIR();
 
+// The return value of this function should be deallocated using "UXDG_FreeResult_Str"
+//
 // Returns the home directory for the current user
 UVK_PUBLIC_API char* UXDG_HOME();
 
+// The return value of this function should be deallocated using "UXDG_FreeResult_Str"
+//
 // XDG Basedir spec: User-specific executable files may be stored in $HOME/.local/bin. Distributions should ensure
 // this directory shows up in the UNIX $PATH environment variable, at an appropriate place.
 //
@@ -66,6 +80,8 @@ UVK_PUBLIC_API char* UXDG_HOME();
 // should be kept in mind.
 UVK_PUBLIC_API char* UXDG_XDG_BIN_PATH_HOME();
 
+// The return value of this function should be deallocated using "UXDG_FreeResult_Arr"
+//
 // XDG Basedir spec: $XDG_DATA_DIRS defines the preference-ordered set of base directories to search for data
 // files in addition to the $XDG_DATA_HOME base directory. The directories in $XDG_DATA_DIRS should be separated
 // with a colon ':'.
@@ -75,6 +91,8 @@ UVK_PUBLIC_API char* UXDG_XDG_BIN_PATH_HOME();
 // The order of base directories denotes their importance; the first directory listed is the most important.
 UVK_PUBLIC_API char** UXDG_XDG_DATA_DIRS(size_t* size);
 
+// The return value of this function should be deallocated using "UXDG_FreeResult_Arr"
+//
 // XDG Basedir spec: $XDG_CONFIG_DIRS defines the preference-ordered set of base directories to search for
 // configuration files in addition to the $XDG_CONFIG_HOME base directory. The directories in $XDG_CONFIG_DIRS
 // should be separated with a colon ':'.
@@ -84,6 +102,8 @@ UVK_PUBLIC_API char** UXDG_XDG_DATA_DIRS(size_t* size);
 // The order of base directories denotes their importance; the first directory listed is the most important.
 UVK_PUBLIC_API char** UXDG_XDG_CONFIG_DIRS(size_t* size);
 
+// The return value of this function should be deallocated using "UXDG_FreeResult_Str"
+//
 // Get an environment variable where the first argument is the name and the second is the default value if it does
 // not exist
 UVK_PUBLIC_API char* UXDG_getEnv(const char* name, const char* val);
@@ -93,8 +113,18 @@ UVK_PUBLIC_API void UXDG_FreeResult_Str(char* data);
 // Frees memory of strings allocated by functions that return an array of string
 UVK_PUBLIC_API void UXDG_FreeResult_Arr(char** data, size_t size);
 
+// The return value of this function should be deallocated using "UXDG_FreeResult_Arr"
+//
 // Splits a list in environment variable format "a:b:c:d:e:f" into an array of strings
 UVK_PUBLIC_API char** UXDG_splitEnv(const char* str, size_t* size);
+
+// Sets the sticky bit permission of a file or directory. This is useful for files in XDG_RUNTIME_DIR that
+// you don't want to be cleaned up automatically.
+//
+// XDG Basedir spec: ...Files in this directory MAY be subjected to periodic clean-up. To ensure that your files
+// are not removed, they should have their access time timestamp modified at least once every 6 hours of
+// monotonic time or the 'sticky' bit should be set on the file.
+UVK_PUBLIC_API void UXDG_setStickyBit(const char* location);
 #ifdef __cplusplus
 }
 #endif

@@ -107,7 +107,7 @@ std::string UXDG::XDG_RUNTIME_DIR() noexcept
 
     // XDG Basedir spec: ... The directory MUST be owned by the user, and he MUST be the only one having
     // read and write access to it. Its Unix access mode MUST be 0700.
-    handleDir(result, std::filesystem::perm_options::replace);
+    if (!result.empty()) handleDir(result, std::filesystem::perm_options::replace);
     return result;
 }
 

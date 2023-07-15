@@ -87,3 +87,48 @@ void UXDG_setStickyBit(const char* location)
 {
     UXDG::setStickyBit(location);
 }
+
+char* UXDG_XDG_DESKTOP_DIR()
+{
+    return str(UXDG::XDG_DESKTOP_DIR());
+}
+
+char* UXDG_XDG_DOWNLOAD_DIR()
+{
+    return str(UXDG::XDG_DOWNLOAD_DIR());
+}
+
+char* UXDG_XDG_TEMPLATES_DIR()
+{
+    return str(UXDG::XDG_TEMPLATES_DIR());
+}
+
+char* UXDG_XDG_PUBLICSHARE_DIR()
+{
+    return str(UXDG::XDG_PUBLICSHARE_DIR());
+}
+
+char* UXDG_XDG_DOCUMENTS_DIR()
+{
+    return str(UXDG::XDG_DOCUMENTS_DIR());
+}
+
+char* UXDG_XDG_MUSIC_DIR()
+{
+    return str(UXDG::XDG_MUSIC_DIR());
+}
+
+char* UXDG_XDG_PICTURES_DIR()
+{
+    return str(UXDG::XDG_PICTURES_DIR());
+}
+
+char* UXDG_XDG_VIDEOS_DIR()
+{
+    return str(UXDG::XDG_VIDEOS_DIR());
+}
+
+char* UXDG_getXDGUserDir(const char* dir, UXDG_XDG_USER_DIR_STANDARD_TYPE type)
+{
+    return str(UXDG::getXDGUserDir(dir, type));
+}

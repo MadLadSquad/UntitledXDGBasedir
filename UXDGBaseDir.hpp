@@ -95,4 +95,37 @@ namespace UXDG
     // are not removed, they should have their access time timestamp modified at least once every 6 hours of
     // monotonic time or the 'sticky' bit should be set on the file.
     UVK_PUBLIC_API void setStickyBit(const std::string& location) noexcept;
+
+    // A XDG User directory, normally resolves to ~/Desktop
+    UVK_PUBLIC_API std::string XDG_DESKTOP_DIR() noexcept;
+
+    // A XDG User directory, normally resolves to ~/Downloads
+    UVK_PUBLIC_API std::string XDG_DOWNLOAD_DIR() noexcept;
+
+    // A XDG User directory, normally resolves to ~/Templates
+    // The "Templates" directory is typically used for template files, for example LibreOffice presentation templates.
+    // In some file managers or applications templates may be added to a quick-access menu when creating a new file.
+    UVK_PUBLIC_API std::string XDG_TEMPLATES_DIR() noexcept;
+
+    // A XDG User directory, normally resolves to ~/Public
+    // This directory is shared between users and can be synced to provide easy file sharing without configuring
+    // groups and folder IDs. There are currently almost no applications that take advantage of this so do not rely
+    // on this behaviour if an application to sync is not installed.
+    UVK_PUBLIC_API std::string XDG_PUBLICSHARE_DIR() noexcept;
+
+    // A XDG User directory, normally resolves to ~/Documents
+    UVK_PUBLIC_API std::string XDG_DOCUMENTS_DIR() noexcept;
+
+    // A XDG User directory, normally resolves to ~/Music
+    UVK_PUBLIC_API std::string XDG_MUSIC_DIR() noexcept;
+
+    // A XDG User directory, normally resolves to ~/Pictures
+    UVK_PUBLIC_API std::string XDG_PICTURES_DIR() noexcept;
+
+    // A XDG User directory, normally resolves to ~/Videos
+    UVK_PUBLIC_API std::string XDG_VIDEOS_DIR() noexcept;
+
+    // Gets an arbitrary XDG user directory, the type argument defaults XDG_USER_DIR_STANDARD_TYPE_CUSTOM. If set to any
+    // other it will be equivalent to calling the equivalent standard XDG User Dirs function
+    UVK_PUBLIC_API std::string getXDGUserDir(const char* dir, UXDG_XDG_USER_DIR_STANDARD_TYPE type = XDG_USER_DIR_STANDARD_TYPE_CUSTOM) noexcept;
 }

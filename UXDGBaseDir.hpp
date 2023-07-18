@@ -128,4 +128,13 @@ namespace UXDG
     // Gets an arbitrary XDG user directory, the type argument defaults XDG_USER_DIR_STANDARD_TYPE_CUSTOM. If set to any
     // other it will be equivalent to calling the equivalent standard XDG User Dirs function
     UVK_PUBLIC_API std::string getXDGUserDir(const char* dir, UXDG_XDG_USER_DIR_STANDARD_TYPE type = XDG_USER_DIR_STANDARD_TYPE_CUSTOM) noexcept;
+
+    // Returns the legacy icons directory for the current user
+    UVK_PUBLIC_API std::string legacyUserIconsDir() noexcept;
+
+    // Returns the legacy theme directory for the current user
+    UVK_PUBLIC_API std::string legacyUserThemesDir() noexcept;
+
+    // Returns the legacy fonts directory for the current user
+    UVK_PUBLIC_API std::string legacyUserFontsDir() noexcept;
 }

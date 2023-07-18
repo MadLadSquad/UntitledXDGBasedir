@@ -323,3 +323,18 @@ std::string UXDG::XDG_VIDEOS_DIR() noexcept
     static std::string str = getXDGUserDir("XDG_VIDEOS_DIR", XDG_USER_DIR_STANDARD_TYPE_VIDEOS_DIR_DEFAULT);
     return str;
 }
+
+std::string UXDG::legacyUserIconsDir() noexcept
+{
+    return HOME() + "/.icons";
+}
+
+std::string UXDG::legacyUserThemesDir() noexcept
+{
+    return HOME() + "/.themes";
+}
+
+std::string UXDG::legacyUserFontsDir() noexcept
+{
+    return HOME() + "/.fonts";
+}

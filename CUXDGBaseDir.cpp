@@ -132,3 +132,18 @@ char* UXDG_getXDGUserDir(const char* dir, UXDG_XDG_USER_DIR_STANDARD_TYPE type)
 {
     return str(UXDG::getXDGUserDir(dir, type));
 }
+
+char* UXDG_legacyUserIconsDir()
+{
+    return str(UXDG::legacyUserIconsDir());
+}
+
+char* UXDG_legacyUserThemesDir()
+{
+    return str(UXDG::legacyUserThemesDir());
+}
+
+char* UXDG_legacyUserFontsDir()
+{
+    return str(UXDG::legacyUserFontsDir());
+}

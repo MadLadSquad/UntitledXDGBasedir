@@ -32,7 +32,6 @@
 *.app
 
 main.cpp
-CMakeLists.txt
 cmake-build-*/
 .vs/
 .idea/

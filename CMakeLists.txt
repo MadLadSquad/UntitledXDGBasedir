@@ -8,10 +8,9 @@ set(CMAKE_C_STANDARD 99)
 include_directories(.)
 
 option(UXDG_INSTALL "Install the UntitledXDGBasedir library" OFF)
-option(UXDG_STATIC "Build as a static library" OFF)
 
 set(UXDG_LIBRARY_TYPE "SHARED")
-if (UXDG_STATIC)
+if (BUILD_VARIANT_STATIC)
     set(UXDG_LIBRARY_TYPE "STATIC")
 endif()
 

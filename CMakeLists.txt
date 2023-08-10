@@ -7,8 +7,6 @@ set(CMAKE_C_STANDARD 99)
 
 include_directories(.)
 
-option(UXDG_INSTALL "Install the UntitledXDGBasedir library" OFF)
-
 set(UXDG_LIBRARY_TYPE "SHARED")
 if (BUILD_VARIANT_STATIC)
     set(UXDG_LIBRARY_TYPE "STATIC")
@@ -20,7 +18,7 @@ add_library(UntitledXDGBasedir ${UXDG_LIBRARY_TYPE} CUXDGBaseDir.cpp UXDGBaseDir
 
 target_compile_definitions(UntitledXDGBasedir PUBLIC USING_XDG)
 
-if (UXDG_INSTALL)
+if (UIMGUI_INSTALL)
     install(TARGETS UntitledXDGBasedir
             LIBRARY DESTINATION lib/
             ARCHIVE DESTINATION lib/)

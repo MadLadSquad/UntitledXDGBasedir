@@ -1,0 +1,12 @@
+prefix="@CMAKE_INSTALL_PREFIX@"
+exec_prefix="${prefix}"
+libdir="${prefix}/lib"
+includedir="${prefix}/include"
+
+Name: @PROJECT_NAME@
+Description: An implementation of the XDG Basedir specification and more
+URL: https://github.com/MadLadSquad/UntitledXDGBasedir
+Version: @PROJECT_VERSION@
+Cflags: -I"${includedir}"
+Libs: -L"${libdir}" -l@PROJECT_NAME@
+Libs.private: -L"${libdir}" -l@PROJECT_NAME@

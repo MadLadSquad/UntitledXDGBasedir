@@ -19,6 +19,7 @@ set(UXDG_HEADERS "Common.h" "CUXDGBaseDir.h" "UXDGBaseDir.hpp")
 
 add_library(UntitledXDGBasedir ${UXDG_LIBRARY_TYPE} CUXDGBaseDir.cpp UXDGBaseDir.cpp ${UXDG_HEADERS})
 
+target_compile_definitions(UntitledXDGBasedir PRIVATE UVK_LOG_EXPORT_FROM_LIBRARY UVK_LIB_COMPILE)
 target_compile_definitions(UntitledXDGBasedir PUBLIC UIMGUI_XDG_BASEDIR_SUBMODULE_ENABLED)
 list(APPEND compile_defs "UIMGUI_XDG_BASEDIR_SUBMODULE_ENABLED")
 if (CREATE_DIRS)

@@ -20,12 +20,15 @@ set(UXDG_HEADERS "Common.h" "CUXDGBaseDir.h" "UXDGBaseDir.hpp")
 add_library(UntitledXDGBasedir ${UXDG_LIBRARY_TYPE} CUXDGBaseDir.cpp UXDGBaseDir.cpp ${UXDG_HEADERS})
 
 target_compile_definitions(UntitledXDGBasedir PUBLIC UIMGUI_XDG_BASEDIR_SUBMODULE_ENABLED)
+list(APPEND compile_defs "UIMGUI_XDG_BASEDIR_SUBMODULE_ENABLED")
 if (CREATE_DIRS)
     target_compile_definitions(UntitledXDGBasedir PUBLIC UXDG_CREATE_DIRS)
+    list(APPEND compile_defs "UXDG_CREATE_DIRS")
 endif()
 
 if (NO_IGNORE_RELATIVE_DIRS)
     target_compile_definitions(UntitledXDGBasedir PUBLIC UXDG_DO_NOT_IGNORE_RELATIVE_DIRS)
+    list(APPEND compile_defs "UXDG_DO_NOT_IGNORE_RELATIVE_DIRS")
 endif()
 
 configure_file(UntitledXDGBasedir.pc.in UntitledXDGBasedir.pc @ONLY)

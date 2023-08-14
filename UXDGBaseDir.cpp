@@ -14,7 +14,7 @@
 #define XDG_DATA_DIRS_DEFAULT "XDG_DATA_DIRS", "/usr/local/share:/usr/share"
 #define XDG_CONFIG_DIRS_DEFAULT "XDG_CONFIG_DIRS", "/etc/xdg"
 
-std::string UXDG::getEnv(const char* name, const char* val) noexcept
+uxdgstring UXDG::getEnv(const char* name, const char* val) noexcept
 {
     auto result = std::getenv(name);
     if (result != nullptr)
@@ -22,9 +22,9 @@ std::string UXDG::getEnv(const char* name, const char* val) noexcept
     return HOME() +  "/" + val;
 }
 
-std::vector<std::string> UXDG::splitEnv(const std::string& str) noexcept
+std::vector<uxdgstring> UXDG::splitEnv(const uxdgstring& str) noexcept
 {
-    std::vector<std::string> result;
+    std::vector<uxdgstring> result;
     size_t lastPos = 0;
     for (size_t i = 0; i < str.size(); i++)
     {
@@ -43,7 +43,7 @@ std::vector<std::string> UXDG::splitEnv(const std::string& str) noexcept
     return result;
 }
 
-void handleDir(std::string& dir, std::filesystem::perm_options permsOpt = std::filesystem::perm_options::add)
+void handleDir(uxdgstring& dir, std::filesystem::perm_options permsOpt = std::filesystem::perm_options::add)
 {
 #ifdef UXDG_CREATE_DIRS
     std::filesystem::path f(dir);
@@ -68,41 +68,41 @@ void handleDir(std::string& dir, std::filesystem::perm_options permsOpt = std::f
 #endif
 }
 
-void handleDirs(std::vector<std::string>& dirs) noexcept
+void handleDirs(std::vector<uxdgstring>& dirs) noexcept
 {
     for (auto& a : dirs)
         handleDir(a);
 }
 
-std::string UXDG::XDG_DATA_HOME() noexcept
+uxdgstring UXDG::XDG_DATA_HOME() noexcept
 {
     auto result = getEnv(XDG_DATA_HOME_DEFAULT);
     handleDir(result);
     return result;
 }
 
-std::string UXDG::XDG_CONFIG_HOME() noexcept
+uxdgstring UXDG::XDG_CONFIG_HOME() noexcept
 {
     auto result = getEnv(XDG_CONFIG_HOME_DEFAULT);
     handleDir(result);
     return result;
 }
 
-std::string UXDG::XDG_STATE_HOME() noexcept
+uxdgstring UXDG::XDG_STATE_HOME() noexcept
 {
     auto result = getEnv(XDG_STATE_HOME_DEFAULT);
     handleDir(result);
     return result;
 }
 
-std::string UXDG::XDG_CACHE_HOME() noexcept
+uxdgstring UXDG::XDG_CACHE_HOME() noexcept
 {
     auto result = getEnv(XDG_CACHE_HOME_DEFAULT);
     handleDir(result);
     return result;
 }
 
-std::string UXDG::XDG_RUNTIME_DIR() noexcept
+uxdgstring UXDG::XDG_RUNTIME_DIR() noexcept
 {
     auto result = getEnv(XDG_RUNTIME_DIR_DEFAULT);
 
@@ -112,7 +112,7 @@ std::string UXDG::XDG_RUNTIME_DIR() noexcept
     return result;
 }
 
-std::string UXDG::HOME() noexcept
+uxdgstring UXDG::HOME() noexcept
 {
     auto result = std::getenv("HOME");
     if (result != nullptr)
@@ -120,28 +120,28 @@ std::string UXDG::HOME() noexcept
     return "";
 }
 
-std::string UXDG::XDG_BIN_PATH_HOME() noexcept
+uxdgstring UXDG::XDG_BIN_PATH_HOME() noexcept
 {
-    std::string result = HOME() + "/" + XDG_BIN_PATH_HOME_DEFAULT;
+    uxdgstring result = HOME() + "/" + XDG_BIN_PATH_HOME_DEFAULT;
     handleDir(result);
     return result;
 }
 
-std::vector<std::string> UXDG::XDG_DATA_DIRS() noexcept
+std::vector<uxdgstring> UXDG::XDG_DATA_DIRS() noexcept
 {
     auto result = splitEnv(getEnv(XDG_DATA_DIRS_DEFAULT));
     handleDirs(result);
     return result;
 }
 
-std::vector<std::string> UXDG::XDG_CONFIG_DIRS() noexcept
+std::vector<uxdgstring> UXDG::XDG_CONFIG_DIRS() noexcept
 {
     auto result = splitEnv(getEnv(XDG_CONFIG_DIRS_DEFAULT));
     handleDirs(result);
     return result;
 }
 
-void UXDG::setStickyBit(const std::string& location) noexcept
+void UXDG::setStickyBit(const uxdgstring& location) noexcept
 {
     std::filesystem::path p(location);
     try {
@@ -155,16 +155,16 @@ void UXDG::setStickyBit(const std::string& location) noexcept
 }
 
 // Replaces $HOME with home directory in strings
-void replaceHome(std::string& str) noexcept
+void replaceHome(uxdgstring& str) noexcept
 {
-    static const std::string home = "$HOME";
+    static const uxdgstring home = "$HOME";
     if (str.starts_with(home))
         str.replace(0, home.length(), UXDG::HOME());
 }
 
-void loadDataFromUserDirFile(const std::string& location,
-                             std::array<std::string, XDG_USER_DIR_STANDARD_TYPE_SIZE>& strings,
-                             std::vector<std::pair<std::string, std::string>>& customDirs) noexcept
+void loadDataFromUserDirFile(const uxdgstring& location,
+                             std::array<uxdgstring, XDG_USER_DIR_STANDARD_TYPE_SIZE>& strings,
+                             std::vector<std::pair<uxdgstring, uxdgstring>>& customDirs) noexcept
 {
     static constexpr const char* predefinedNames[] = {
             "", // This one is here so that we are aligned to the XDG_USER_DIR_STANDARD_TYPE enum
@@ -179,7 +179,7 @@ void loadDataFromUserDirFile(const std::string& location,
     };
 
     std::ifstream in(location);
-    std::string line;
+    uxdgstring line;
 
     while (std::getline(in, line))
     {
@@ -187,7 +187,7 @@ void loadDataFromUserDirFile(const std::string& location,
         // Starting from 1 since 0 is the custom type which we don't want
         for (size_t i = 1; i < XDG_USER_DIR_STANDARD_TYPE_SIZE; i++)
         {
-            std::string it = predefinedNames[i];
+            uxdgstring it = predefinedNames[i];
 
 // strlen("=\"")
 #define MAGIC_NUMBER_EQUAL_QUOTE 2
@@ -205,9 +205,9 @@ void loadDataFromUserDirFile(const std::string& location,
         if (!bFoundOne && line.starts_with("XDG_"))
         {
             size_t result = line.find_first_of("=\"");
-            if (result != std::string::npos)
+            if (result != uxdgstring::npos)
             {
-                customDirs.emplace_back(std::make_pair<std::string, std::string>(
+                customDirs.emplace_back(std::make_pair<uxdgstring, uxdgstring>(
                     line.substr(0, result),
                     line.substr(
                         result + MAGIC_NUMBER_EQUAL_QUOTE,
@@ -225,10 +225,10 @@ void loadDataFromUserDirFile(const std::string& location,
         replaceHome(a.second);
 }
 
-std::string UXDG::getXDGUserDir(const char* dir, UXDG_XDG_USER_DIR_STANDARD_TYPE type) noexcept
+uxdgstring UXDG::getXDGUserDir(const char* dir, UXDG_XDG_USER_DIR_STANDARD_TYPE type) noexcept
 {
-    static std::array<std::string, XDG_USER_DIR_STANDARD_TYPE_SIZE> strings;
-    static std::vector<std::pair<std::string, std::string>> customDirs;
+    static std::array<uxdgstring, XDG_USER_DIR_STANDARD_TYPE_SIZE> strings;
+    static std::vector<std::pair<uxdgstring, uxdgstring>> customDirs;
 
     // This is made so that the file is read only once
     static bool bFirst = true;
@@ -276,65 +276,65 @@ std::string UXDG::getXDGUserDir(const char* dir, UXDG_XDG_USER_DIR_STANDARD_TYPE
     return "";
 }
 
-std::string UXDG::XDG_DESKTOP_DIR() noexcept
+uxdgstring UXDG::XDG_DESKTOP_DIR() noexcept
 {
-    static std::string str = getXDGUserDir("XDG_DESKTOP_DIR", XDG_USER_DIR_STANDARD_TYPE_DESKTOP_DIR_DEFAULT);
+    static uxdgstring str = getXDGUserDir("XDG_DESKTOP_DIR", XDG_USER_DIR_STANDARD_TYPE_DESKTOP_DIR_DEFAULT);
     return str;
 }
 
-std::string UXDG::XDG_DOWNLOAD_DIR() noexcept
+uxdgstring UXDG::XDG_DOWNLOAD_DIR() noexcept
 {
-    static std::string str = getXDGUserDir("XDG_DOWNLOAD_DIR", XDG_USER_DIR_STANDARD_TYPE_DOWNLOAD_DIR_DEFAULT);
+    static uxdgstring str = getXDGUserDir("XDG_DOWNLOAD_DIR", XDG_USER_DIR_STANDARD_TYPE_DOWNLOAD_DIR_DEFAULT);
     return str;
 }
 
-std::string UXDG::XDG_TEMPLATES_DIR() noexcept
+uxdgstring UXDG::XDG_TEMPLATES_DIR() noexcept
 {
-    static std::string str = getXDGUserDir("XDG_TEMPLATES_DIR", XDG_USER_DIR_STANDARD_TYPE_TEMPLATES_DIR_DEFAULT);
+    static uxdgstring str = getXDGUserDir("XDG_TEMPLATES_DIR", XDG_USER_DIR_STANDARD_TYPE_TEMPLATES_DIR_DEFAULT);
     return str;
 }
 
-std::string UXDG::XDG_PUBLICSHARE_DIR() noexcept
+uxdgstring UXDG::XDG_PUBLICSHARE_DIR() noexcept
 {
-    static std::string str = getXDGUserDir("XDG_PUBLICSHARE_DIR", XDG_USER_DIR_STANDARD_TYPE_PUBLICSHARE_DIR_DEFAULT);
+    static uxdgstring str = getXDGUserDir("XDG_PUBLICSHARE_DIR", XDG_USER_DIR_STANDARD_TYPE_PUBLICSHARE_DIR_DEFAULT);
     return str;
 }
 
-std::string UXDG::XDG_DOCUMENTS_DIR() noexcept
+uxdgstring UXDG::XDG_DOCUMENTS_DIR() noexcept
 {
-    static std::string str = getXDGUserDir("XDG_DOCUMENTS_DIR", XDG_USER_DIR_STANDARD_TYPE_DOCUMENTS_DIR_DEFAULT);
+    static uxdgstring str = getXDGUserDir("XDG_DOCUMENTS_DIR", XDG_USER_DIR_STANDARD_TYPE_DOCUMENTS_DIR_DEFAULT);
     return str;
 }
 
-std::string UXDG::XDG_MUSIC_DIR() noexcept
+uxdgstring UXDG::XDG_MUSIC_DIR() noexcept
 {
-    static std::string str = getXDGUserDir("XDG_MUSIC_DIR", XDG_USER_DIR_STANDARD_TYPE_MUSIC_DIR_DEFAULT);
+    static uxdgstring str = getXDGUserDir("XDG_MUSIC_DIR", XDG_USER_DIR_STANDARD_TYPE_MUSIC_DIR_DEFAULT);
     return str;
 }
 
-std::string UXDG::XDG_PICTURES_DIR() noexcept
+uxdgstring UXDG::XDG_PICTURES_DIR() noexcept
 {
-    static std::string str = getXDGUserDir("XDG_PICTURES_DIR", XDG_USER_DIR_STANDARD_TYPE_PICTURES_DIR_DEFAULT);
+    static uxdgstring str = getXDGUserDir("XDG_PICTURES_DIR", XDG_USER_DIR_STANDARD_TYPE_PICTURES_DIR_DEFAULT);
     return str;
 }
 
-std::string UXDG::XDG_VIDEOS_DIR() noexcept
+uxdgstring UXDG::XDG_VIDEOS_DIR() noexcept
 {
-    static std::string str = getXDGUserDir("XDG_VIDEOS_DIR", XDG_USER_DIR_STANDARD_TYPE_VIDEOS_DIR_DEFAULT);
+    static uxdgstring str = getXDGUserDir("XDG_VIDEOS_DIR", XDG_USER_DIR_STANDARD_TYPE_VIDEOS_DIR_DEFAULT);
     return str;
 }
 
-std::string UXDG::legacyUserIconsDir() noexcept
+uxdgstring UXDG::legacyUserIconsDir() noexcept
 {
     return HOME() + "/.icons";
 }
 
-std::string UXDG::legacyUserThemesDir() noexcept
+uxdgstring UXDG::legacyUserThemesDir() noexcept
 {
     return HOME() + "/.themes";
 }
 
-std::string UXDG::legacyUserFontsDir() noexcept
+uxdgstring UXDG::legacyUserFontsDir() noexcept
 {
     return HOME() + "/.fonts";
 }

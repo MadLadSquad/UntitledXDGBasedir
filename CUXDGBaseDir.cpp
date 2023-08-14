@@ -4,7 +4,7 @@
 
 #define str(x) strdup(x.c_str())
 
-char** copyArray(const std::vector<std::string>& arr, size_t* sz)
+char** copyArray(const std::vector<uxdgstring>& arr, size_t* sz)
 {
     if (arr.empty())
         return nullptr;

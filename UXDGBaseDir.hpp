@@ -4,28 +4,40 @@
 #include <vector>
 #include "Common.h"
 
+#ifdef UXDG_CUSTOM_STRING
+    #ifdef UXDG_CUSTOM_STRING_INCLUDE
+		#include UXDG_CUSTOM_STRING_INCLUDE
+		typedef UXDG_CUSTOM_STRING uxdgstring;
+	#else
+		#error UXDG_CUSTOM_STRING defined but UEXEC_CUSTOM_STRING_INCLUDE not defined, it is needed to include the necessary headers for the string, and should contain the name of the header wrapped in ""
+	#endif
+#else
+    #include <string>
+    typedef std::string uxdgstring;
+#endif
+
 namespace UXDG
 {
     // XDG Basedir spec: $XDG_DATA_HOME defines the base directory relative to which user-specific data files should be
     // stored. If $XDG_DATA_HOME is either not set or empty, a default equal to $HOME/.local/share should be used.
-    UVK_PUBLIC_API std::string XDG_DATA_HOME() noexcept;
+    UVK_PUBLIC_API uxdgstring XDG_DATA_HOME() noexcept;
 
     // XDG Basedir spec: $XDG_CONFIG_HOME defines the base directory relative to which user-specific configuration
     // files should be stored. If $XDG_CONFIG_HOME is either not set or empty, a default equal to $HOME/.config should
     // be used.
-    UVK_PUBLIC_API std::string XDG_CONFIG_HOME() noexcept;
+    UVK_PUBLIC_API uxdgstring XDG_CONFIG_HOME() noexcept;
 
     // XDG Basedir spec: The $XDG_STATE_HOME contains state data that should persist between (application) restarts,
     // but that is not important or portable enough to the user that it should be stored in $XDG_DATA_HOME.
     // It may contain:
     // - actions history (logs, history, recently used files, …)
     // - current state of the application that can be reused on a restart (view, layout, open files, undo history, …)
-    UVK_PUBLIC_API std::string XDG_STATE_HOME() noexcept;
+    UVK_PUBLIC_API uxdgstring XDG_STATE_HOME() noexcept;
 
     // XDG Basedir spec: $XDG_CACHE_HOME defines the base directory relative to which user-specific non-essential
     // data files should be stored. If $XDG_CACHE_HOME is either not set or empty, a default equal to
     // $HOME/.cache should be used.
-    UVK_PUBLIC_API std::string XDG_CACHE_HOME() noexcept;
+    UVK_PUBLIC_API uxdgstring XDG_CACHE_HOME() noexcept;
 
     // XDG Basedir spec: $XDG_RUNTIME_DIR defines the base directory relative to which user-specific non-essential
     // runtime files and other file objects (such as sockets, named pipes, ...) should be stored.
@@ -50,10 +62,10 @@ namespace UXDG
     // capabilities and print a warning message. Applications should use this directory for communication and
     // synchronization purposes and should not place larger files in it, since it might reside in runtime
     // memory and cannot necessarily be swapped out to disk.
-    UVK_PUBLIC_API std::string XDG_RUNTIME_DIR() noexcept;
+    UVK_PUBLIC_API uxdgstring XDG_RUNTIME_DIR() noexcept;
 
     // Returns the home directory for the current user
-    UVK_PUBLIC_API std::string HOME() noexcept;
+    UVK_PUBLIC_API uxdgstring HOME() noexcept;
 
     // XDG Basedir spec: User-specific executable files may be stored in $HOME/.local/bin. Distributions should ensure
     // this directory shows up in the UNIX $PATH environment variable, at an appropriate place.
@@ -62,7 +74,7 @@ namespace UXDG
     // $HOME/.local/bin could cause problems when used on systems of differing architectures. This is often not a
     // problem, but the fact that $HOME becomes partially architecture-specific if compiled binaries are placed in it
     // should be kept in mind.
-    UVK_PUBLIC_API std::string XDG_BIN_PATH_HOME() noexcept;
+    UVK_PUBLIC_API uxdgstring XDG_BIN_PATH_HOME() noexcept;
 
     // XDG Basedir spec: $XDG_DATA_DIRS defines the preference-ordered set of base directories to search for data
     // files in addition to the $XDG_DATA_HOME base directory. The directories in $XDG_DATA_DIRS should be separated
@@ -71,7 +83,7 @@ namespace UXDG
     // If $XDG_DATA_DIRS is either not set or empty, a value equal to /usr/local/share/:/usr/share/ should be used.
     //
     // The order of base directories denotes their importance; the first directory listed is the most important.
-    UVK_PUBLIC_API std::vector<std::string> XDG_DATA_DIRS() noexcept;
+    UVK_PUBLIC_API std::vector<uxdgstring> XDG_DATA_DIRS() noexcept;
 
     // XDG Basedir spec: $XDG_CONFIG_DIRS defines the preference-ordered set of base directories to search for
     // configuration files in addition to the $XDG_CONFIG_HOME base directory. The directories in $XDG_CONFIG_DIRS
@@ -80,14 +92,14 @@ namespace UXDG
     // If $XDG_CONFIG_DIRS is either not set or empty, a value equal to /etc/xdg should be used.
     //
     // The order of base directories denotes their importance; the first directory listed is the most important.
-    UVK_PUBLIC_API std::vector<std::string> XDG_CONFIG_DIRS() noexcept;
+    UVK_PUBLIC_API std::vector<uxdgstring> XDG_CONFIG_DIRS() noexcept;
 
     // Get an environment variable where the first argument is the name and the second is the default value if it does
     // not exist
-    UVK_PUBLIC_API std::string getEnv(const char* name, const char* val) noexcept;
+    UVK_PUBLIC_API uxdgstring getEnv(const char* name, const char* val) noexcept;
 
     // Splits a list in environment variable format "a:b:c:d:e:f" into an array of strings
-    UVK_PUBLIC_API std::vector<std::string> splitEnv(const std::string& str) noexcept;
+    UVK_PUBLIC_API std::vector<uxdgstring> splitEnv(const uxdgstring& str) noexcept;
 
     // Sets the sticky bit permission of a file or directory. This is useful for files in XDG_RUNTIME_DIR that
     // you don't want to be cleaned up automatically.
@@ -95,47 +107,47 @@ namespace UXDG
     // XDG Basedir spec: ...Files in this directory MAY be subjected to periodic clean-up. To ensure that your files
     // are not removed, they should have their access time timestamp modified at least once every 6 hours of
     // monotonic time or the 'sticky' bit should be set on the file.
-    UVK_PUBLIC_API void setStickyBit(const std::string& location) noexcept;
+    UVK_PUBLIC_API void setStickyBit(const uxdgstring& location) noexcept;
 
     // A XDG User directory, normally resolves to ~/Desktop
-    UVK_PUBLIC_API std::string XDG_DESKTOP_DIR() noexcept;
+    UVK_PUBLIC_API uxdgstring XDG_DESKTOP_DIR() noexcept;
 
     // A XDG User directory, normally resolves to ~/Downloads
-    UVK_PUBLIC_API std::string XDG_DOWNLOAD_DIR() noexcept;
+    UVK_PUBLIC_API uxdgstring XDG_DOWNLOAD_DIR() noexcept;
 
     // A XDG User directory, normally resolves to ~/Templates
     // The "Templates" directory is typically used for template files, for example LibreOffice presentation templates.
     // In some file managers or applications templates may be added to a quick-access menu when creating a new file.
-    UVK_PUBLIC_API std::string XDG_TEMPLATES_DIR() noexcept;
+    UVK_PUBLIC_API uxdgstring XDG_TEMPLATES_DIR() noexcept;
 
     // A XDG User directory, normally resolves to ~/Public
     // This directory is shared between users and can be synced to provide easy file sharing without configuring
     // groups and folder IDs. There are currently almost no applications that take advantage of this so do not rely
     // on this behaviour if an application to sync is not installed.
-    UVK_PUBLIC_API std::string XDG_PUBLICSHARE_DIR() noexcept;
+    UVK_PUBLIC_API uxdgstring XDG_PUBLICSHARE_DIR() noexcept;
 
     // A XDG User directory, normally resolves to ~/Documents
-    UVK_PUBLIC_API std::string XDG_DOCUMENTS_DIR() noexcept;
+    UVK_PUBLIC_API uxdgstring XDG_DOCUMENTS_DIR() noexcept;
 
     // A XDG User directory, normally resolves to ~/Music
-    UVK_PUBLIC_API std::string XDG_MUSIC_DIR() noexcept;
+    UVK_PUBLIC_API uxdgstring XDG_MUSIC_DIR() noexcept;
 
     // A XDG User directory, normally resolves to ~/Pictures
-    UVK_PUBLIC_API std::string XDG_PICTURES_DIR() noexcept;
+    UVK_PUBLIC_API uxdgstring XDG_PICTURES_DIR() noexcept;
 
     // A XDG User directory, normally resolves to ~/Videos
-    UVK_PUBLIC_API std::string XDG_VIDEOS_DIR() noexcept;
+    UVK_PUBLIC_API uxdgstring XDG_VIDEOS_DIR() noexcept;
 
     // Gets an arbitrary XDG user directory, the type argument defaults XDG_USER_DIR_STANDARD_TYPE_CUSTOM. If set to any
     // other it will be equivalent to calling the equivalent standard XDG User Dirs function
-    UVK_PUBLIC_API std::string getXDGUserDir(const char* dir, UXDG_XDG_USER_DIR_STANDARD_TYPE type = XDG_USER_DIR_STANDARD_TYPE_CUSTOM) noexcept;
+    UVK_PUBLIC_API uxdgstring getXDGUserDir(const char* dir, UXDG_XDG_USER_DIR_STANDARD_TYPE type = XDG_USER_DIR_STANDARD_TYPE_CUSTOM) noexcept;
 
     // Returns the legacy icons directory for the current user
-    UVK_PUBLIC_API std::string legacyUserIconsDir() noexcept;
+    UVK_PUBLIC_API uxdgstring legacyUserIconsDir() noexcept;
 
     // Returns the legacy theme directory for the current user
-    UVK_PUBLIC_API std::string legacyUserThemesDir() noexcept;
+    UVK_PUBLIC_API uxdgstring legacyUserThemesDir() noexcept;
 
     // Returns the legacy fonts directory for the current user
-    UVK_PUBLIC_API std::string legacyUserFontsDir() noexcept;
+    UVK_PUBLIC_API uxdgstring legacyUserFontsDir() noexcept;
 }

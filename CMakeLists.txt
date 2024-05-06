@@ -37,8 +37,8 @@ configure_file(UntitledXDGBasedir.pc.in UntitledXDGBasedir.pc @ONLY)
 
 if (UIMGUI_INSTALL)
     install(TARGETS UntitledXDGBasedir
-            LIBRARY DESTINATION lib/
-            ARCHIVE DESTINATION lib/)
+            LIBRARY DESTINATION lib64/
+            ARCHIVE DESTINATION lib64/)
     install(FILES ${UXDG_HEADERS} DESTINATION include/UntitledXDGBasedir)
     install(FILES ${UXDG_C_HEADERS} DESTINATION include/UntitledXDGBasedir/C)
     install(FILES ${PROJECT_BINARY_DIR}/UntitledXDGBasedir.pc

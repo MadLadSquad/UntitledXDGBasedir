@@ -45,9 +45,8 @@ std::vector<uxdgstring> UXDG::splitEnv(const uxdgstring& str) noexcept
 
 void handleDir(uxdgstring& dir, std::filesystem::perm_options permsOpt = std::filesystem::perm_options::add)
 {
-#ifdef UXDG_CREATE_DIRS
     std::filesystem::path f(dir);
-
+#ifdef UXDG_CREATE_DIRS
     try
     {
         if (!exists(f))

@@ -13,7 +13,7 @@ extern "C"
 // XDG Basedir spec: $XDG_DATA_HOME defines the base directory relative to which user-specific data files should be
 // stored. If $XDG_DATA_HOME is either not set or empty, a default equal to $HOME/.local/share should be used.
 // UntitledImGuiFramework Event Safety - Any time
-UVK_PUBLIC_API char* UXDG_XDG_DATA_HOME();
+MLS_PUBLIC_API char* UXDG_XDG_DATA_HOME();
 
 // The return value of this function should be deallocated using "UXDG_FreeResult_Str"
 //
@@ -21,7 +21,7 @@ UVK_PUBLIC_API char* UXDG_XDG_DATA_HOME();
 // files should be stored. If $XDG_CONFIG_HOME is either not set or empty, a default equal to $HOME/.config should
 // be used.
 // UntitledImGuiFramework Event Safety - Any time
-UVK_PUBLIC_API char* UXDG_XDG_CONFIG_HOME();
+MLS_PUBLIC_API char* UXDG_XDG_CONFIG_HOME();
 
 // The return value of this function should be deallocated using "UXDG_FreeResult_Str"
 //
@@ -31,7 +31,7 @@ UVK_PUBLIC_API char* UXDG_XDG_CONFIG_HOME();
 // - actions history (logs, history, recently used files, …)
 // - current state of the application that can be reused on a restart (view, layout, open files, undo history, …)
 // UntitledImGuiFramework Event Safety - Any time
-UVK_PUBLIC_API char* UXDG_XDG_STATE_HOME();
+MLS_PUBLIC_API char* UXDG_XDG_STATE_HOME();
 
 // The return value of this function should be deallocated using "UXDG_FreeResult_Str"
 //
@@ -39,7 +39,7 @@ UVK_PUBLIC_API char* UXDG_XDG_STATE_HOME();
 // data files should be stored. If $XDG_CACHE_HOME is either not set or empty, a default equal to
 // $HOME/.cache should be used.
 // UntitledImGuiFramework Event Safety - Any time
-UVK_PUBLIC_API char* UXDG_XDG_CACHE_HOME();
+MLS_PUBLIC_API char* UXDG_XDG_CACHE_HOME();
 
 // The return value of this function should be deallocated using "UXDG_FreeResult_Str"
 //
@@ -67,13 +67,13 @@ UVK_PUBLIC_API char* UXDG_XDG_CACHE_HOME();
 // synchronization purposes and should not place larger files in it, since it might reside in runtime
 // memory and cannot necessarily be swapped out to disk.
 // UntitledImGuiFramework Event Safety - Any time
-UVK_PUBLIC_API char* UXDG_XDG_RUNTIME_DIR();
+MLS_PUBLIC_API char* UXDG_XDG_RUNTIME_DIR();
 
 // The return value of this function should be deallocated using "UXDG_FreeResult_Str"
 //
 // Returns the home directory for the current user
 // UntitledImGuiFramework Event Safety - Any time
-UVK_PUBLIC_API char* UXDG_HOME();
+MLS_PUBLIC_API char* UXDG_HOME();
 
 // The return value of this function should be deallocated using "UXDG_FreeResult_Str"
 //
@@ -85,7 +85,7 @@ UVK_PUBLIC_API char* UXDG_HOME();
 // problem, but the fact that $HOME becomes partially architecture-specific if compiled binaries are placed in it
 // should be kept in mind.
 // UntitledImGuiFramework Event Safety - Any time
-UVK_PUBLIC_API char* UXDG_XDG_BIN_PATH_HOME();
+MLS_PUBLIC_API char* UXDG_XDG_BIN_PATH_HOME();
 
 // The return value of this function should be deallocated using "UXDG_FreeResult_Arr"
 //
@@ -97,7 +97,7 @@ UVK_PUBLIC_API char* UXDG_XDG_BIN_PATH_HOME();
 //
 // The order of base directories denotes their importance; the first directory listed is the most important.
 // UntitledImGuiFramework Event Safety - Any time
-UVK_PUBLIC_API char** UXDG_XDG_DATA_DIRS(size_t* size);
+MLS_PUBLIC_API char** UXDG_XDG_DATA_DIRS(size_t* size);
 
 // The return value of this function should be deallocated using "UXDG_FreeResult_Arr"
 //
@@ -109,27 +109,27 @@ UVK_PUBLIC_API char** UXDG_XDG_DATA_DIRS(size_t* size);
 //
 // The order of base directories denotes their importance; the first directory listed is the most important.
 // UntitledImGuiFramework Event Safety - Any time
-UVK_PUBLIC_API char** UXDG_XDG_CONFIG_DIRS(size_t* size);
+MLS_PUBLIC_API char** UXDG_XDG_CONFIG_DIRS(size_t* size);
 
 // The return value of this function should be deallocated using "UXDG_FreeResult_Str"
 //
 // Get an environment variable where the first argument is the name and the second is the default value if it does
 // not exist
 // UntitledImGuiFramework Event Safety - Any time
-UVK_PUBLIC_API char* UXDG_getEnv(const char* name, const char* val);
+MLS_PUBLIC_API char* UXDG_getEnv(const char* name, const char* val);
 
 // Frees memory of string allocated by functions that return a single string
 // UntitledImGuiFramework Event Safety - Any time
-UVK_PUBLIC_API void UXDG_FreeResult_Str(char* data);
+MLS_PUBLIC_API void UXDG_FreeResult_Str(char* data);
 // Frees memory of strings allocated by functions that return an array of string
 // UntitledImGuiFramework Event Safety - Any time
-UVK_PUBLIC_API void UXDG_FreeResult_Arr(char** data, size_t size);
+MLS_PUBLIC_API void UXDG_FreeResult_Arr(char** data, size_t size);
 
 // The return value of this function should be deallocated using "UXDG_FreeResult_Arr"
 //
 // Splits a list in environment variable format "a:b:c:d:e:f" into an array of strings
 // UntitledImGuiFramework Event Safety - Any time
-UVK_PUBLIC_API char** UXDG_splitEnv(const char* str, size_t* size);
+MLS_PUBLIC_API char** UXDG_splitEnv(const char* str, size_t* size);
 
 // Sets the sticky bit permission of a file or directory. This is useful for files in XDG_RUNTIME_DIR that
 // you don't want to be cleaned up automatically.
@@ -138,61 +138,61 @@ UVK_PUBLIC_API char** UXDG_splitEnv(const char* str, size_t* size);
 // are not removed, they should have their access time timestamp modified at least once every 6 hours of
 // monotonic time or the 'sticky' bit should be set on the file.
 // UntitledImGuiFramework Event Safety - Any time
-UVK_PUBLIC_API void UXDG_setStickyBit(const char* location);
+MLS_PUBLIC_API void UXDG_setStickyBit(const char* location);
 
 // A XDG User directory, normally resolves to ~/Desktop
 // UntitledImGuiFramework Event Safety - Any time
-UVK_PUBLIC_API char* UXDG_XDG_DESKTOP_DIR();
+MLS_PUBLIC_API char* UXDG_XDG_DESKTOP_DIR();
 
 // A XDG User directory, normally resolves to ~/Downloads
 // UntitledImGuiFramework Event Safety - Any time
-UVK_PUBLIC_API char* UXDG_XDG_DOWNLOAD_DIR();
+MLS_PUBLIC_API char* UXDG_XDG_DOWNLOAD_DIR();
 
 // A XDG User directory, normally resolves to ~/Templates
 // The "Templates" directory is typically used for template files, for example LibreOffice presentation templates.
 // In some file managers or applications templates may be added to a quick-access menu when creating a new file.
 // UntitledImGuiFramework Event Safety - Any time
-UVK_PUBLIC_API char* UXDG_XDG_TEMPLATES_DIR();
+MLS_PUBLIC_API char* UXDG_XDG_TEMPLATES_DIR();
 
 // A XDG User directory, normally resolves to ~/Public
 // This directory is shared between users and can be synced to provide easy file sharing without configuring
 // groups and folder IDs. There are currently almost no applications that take advantage of this so do not rely
 // on this behaviour if an application to sync is not installed.
 // UntitledImGuiFramework Event Safety - Any time
-UVK_PUBLIC_API char* UXDG_XDG_PUBLICSHARE_DIR();
+MLS_PUBLIC_API char* UXDG_XDG_PUBLICSHARE_DIR();
 
 // A XDG User directory, normally resolves to ~/Documents
 // UntitledImGuiFramework Event Safety - Any time
-UVK_PUBLIC_API char* UXDG_XDG_DOCUMENTS_DIR();
+MLS_PUBLIC_API char* UXDG_XDG_DOCUMENTS_DIR();
 
 // A XDG User directory, normally resolves to ~/Music
 // UntitledImGuiFramework Event Safety - Any time
-UVK_PUBLIC_API char* UXDG_XDG_MUSIC_DIR();
+MLS_PUBLIC_API char* UXDG_XDG_MUSIC_DIR();
 
 // A XDG User directory, normally resolves to ~/Pictures
 // UntitledImGuiFramework Event Safety - Any time
-UVK_PUBLIC_API char* UXDG_XDG_PICTURES_DIR();
+MLS_PUBLIC_API char* UXDG_XDG_PICTURES_DIR();
 
 // A XDG User directory, normally resolves to ~/Videos
 // UntitledImGuiFramework Event Safety - Any time
-UVK_PUBLIC_API char* UXDG_XDG_VIDEOS_DIR();
+MLS_PUBLIC_API char* UXDG_XDG_VIDEOS_DIR();
 
 // Gets an arbitrary XDG user directory, the type argument defaults XDG_USER_DIR_STANDARD_TYPE_CUSTOM. If set to any
 // other it will be equivalent to calling the equivalent standard XDG User Dirs function
 // UntitledImGuiFramework Event Safety - Any time
-UVK_PUBLIC_API char* UXDG_getXDGUserDir(const char* dir, UXDG_XDG_USER_DIR_STANDARD_TYPE type);
+MLS_PUBLIC_API char* UXDG_getXDGUserDir(const char* dir, UXDG_XDG_USER_DIR_STANDARD_TYPE type);
 
 // Returns the legacy icons directory for the current user
 // UntitledImGuiFramework Event Safety - Any time
-UVK_PUBLIC_API char* UXDG_legacyUserIconsDir();
+MLS_PUBLIC_API char* UXDG_legacyUserIconsDir();
 
 // Returns the legacy theme directory for the current user
 // UntitledImGuiFramework Event Safety - Any time
-UVK_PUBLIC_API char* UXDG_legacyUserThemesDir();
+MLS_PUBLIC_API char* UXDG_legacyUserThemesDir();
 
 // Returns the legacy fonts directory for the current user
 // UntitledImGuiFramework Event Safety - Any time
-UVK_PUBLIC_API char* UXDG_legacyUserFontsDir();
+MLS_PUBLIC_API char* UXDG_legacyUserFontsDir();
 #ifdef __cplusplus
 }
 #endif

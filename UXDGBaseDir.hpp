@@ -9,7 +9,7 @@
 		#include UXDG_CUSTOM_STRING_INCLUDE
 		typedef UXDG_CUSTOM_STRING uxdgstring;
 	#else
-		#error UXDG_CUSTOM_STRING defined but UEXEC_CUSTOM_STRING_INCLUDE not defined, it is needed to include the necessary headers for the string, and should contain the name of the header wrapped in ""
+		#error UXDG_CUSTOM_STRING defined but UXDG_CUSTOM_STRING_INCLUDE not defined, it is needed to include the necessary headers for the string, and should contain the name of the header wrapped in ""
 	#endif
 #else
     #include <string>

@@ -17,8 +17,12 @@
 uxdgstring UXDG::getEnv(const char* name, const char* val) noexcept
 {
     auto result = std::getenv(name);
-    if (result != nullptr)
+    if (result != nullptr && result[0] != '\0')
         return result;
+    if (val == nullptr || val[0] == '\0')
+        return "";
+    if (val[0] == '/')
+        return val;
     return HOME() +  "/" + val;
 }
 
@@ -30,21 +34,19 @@ std::vector<uxdgstring> UXDG::splitEnv(const uxdgstring& str) noexcept
     {
         if (str[i] == ':')
         {
-            if (i == 0)
-                result.emplace_back();
-            else
-                result.push_back(str.substr(lastPos, i - lastPos));
-            ++i;
-            lastPos = i;
+            result.push_back(str.substr(lastPos, i - lastPos));
+            lastPos = i + 1;
         }
     }
-    result.push_back(str.substr(lastPos, str.size()));
+    result.push_back(str.substr(lastPos));
 
     return result;
 }
 
 void handleDir(uxdgstring& dir, std::filesystem::perm_options permsOpt = std::filesystem::perm_options::add)
 {
+    if (dir.empty())
+        return;
     std::filesystem::path f(dir);
 #ifdef UXDG_CREATE_DIRS
     try
@@ -153,7 +155,9 @@ void UXDG::setStickyBit(const uxdgstring& location) noexcept
     }
 }
 
-// Replaces $HOME with home directory in strings
+// Replaces a leading $HOME with the home directory.
+// Only the leading occurrence is substituted because the xdg-user-dirs file format only permits $HOME
+// as a path prefix; any later '$HOME' is a literal directory name, not a variable.
 void replaceHome(uxdgstring& str) noexcept
 {
     static const uxdgstring home = "$HOME";
@@ -203,7 +207,7 @@ void loadDataFromUserDirFile(const uxdgstring& location,
         // If no strings were found this means it's custom
         if (!bFoundOne && line.starts_with("XDG_"))
         {
-            size_t result = line.find_first_of("=\"");
+            size_t result = line.find('=');
             if (result != uxdgstring::npos)
             {
                 customDirs.emplace_back(std::make_pair<uxdgstring, uxdgstring>(

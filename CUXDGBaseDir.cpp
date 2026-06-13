@@ -7,13 +7,35 @@
 char** copyArray(const std::vector<uxdgstring>& arr, size_t* sz)
 {
     if (arr.empty())
+    {
+        if (sz != nullptr)
+            *sz = 0;
         return nullptr;
+    }
 
-    *sz = arr.size();
     auto result = (char**)malloc(arr.size() * sizeof(char*));
+    if (result == nullptr)
+    {
+        if (sz != nullptr)
+            *sz = 0;
+        return nullptr;
+    }
     for (size_t i = 0; i < arr.size(); i++)
+    {
         result[i] = str(arr[i]);
-    return result; 
+        if (result[i] == nullptr)
+        {
+            for (size_t j = 0; j < i; j++)
+                free(result[j]);
+            free(result);
+            if (sz != nullptr)
+                *sz = 0;
+            return nullptr;
+        }
+    }
+    if (sz != nullptr)
+        *sz = arr.size();
+    return result;
 }
 
 char* UXDG_XDG_DATA_HOME()
